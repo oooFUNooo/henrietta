@@ -6,13 +6,12 @@ import zipfile
 import discord
 import requests
 import urllib.parse
-from threading import Thread
 
 
 PROJECT_EU4     = '76'
 PROJECT_CK2     = '91'
 PROJECT_PREFIX  = 'https://paratranz.cn/projects/'
-PROJECT_POSTFIX = '/strings?mode=4&key='
+PROJECT_POSTFIX = '/strings?key='
 ZIPFILE_PREFIX  = 'https://paratranz.cn/api/projects/'
 ZIPFILE_POSTFIX = '/artifacts/download'
 PARATRANZ_EU4   = PROJECT_PREFIX + PROJECT_EU4 + PROJECT_POSTFIX
@@ -54,7 +53,7 @@ async def on_message(message):
                         newresult = eu4dic.get(newkey)
                         if newresult:
                             found = True
-                            out = PARATRANZ_EU4 + urllib.parse.quote(newkey) + '\n'
+                            out = PARATRANZ_EU4 + urllib.parse.quote(newkey) + '&mode=6\n'
                             out = out + '```' + newresult[0] + '```'
                             out = out + '```' + newresult[1] + '```'
                             break
@@ -63,7 +62,7 @@ async def on_message(message):
                     else:
                         await message.channel.send('そのキーは存在しません')
                 else:
-                    out = PARATRANZ_EU4 + urllib.parse.quote(key) + '\n'
+                    out = PARATRANZ_EU4 + urllib.parse.quote(key) + '&mode=6\n'
                     out = out + '```' + result[0] + '```'
                     out = out + '```' + result[1] + '```'
                     await message.channel.send(out)
@@ -97,7 +96,7 @@ async def on_message(message):
                         count = 0
                         for entry in results:
                             count = count + 1
-                            out = PARATRANZ_EU4 + urllib.parse.quote(entry[1]) + '\n'
+                            out = PARATRANZ_EU4 + urllib.parse.quote(entry[1]) + '&mode=4\n'
                             out = out + '```' + entry[2] + '```'
                             out = out + '```' + entry[3] + '```'
                             await message.channel.send(out)
@@ -118,7 +117,7 @@ async def on_message(message):
                         newresult = ck2dic.get(newkey)
                         if newresult:
                             found = True
-                            out = PARATRANZ_CK2 + urllib.parse.quote(newkey) + '\n'
+                            out = PARATRANZ_CK2 + urllib.parse.quote(newkey) + '&mode=6\n'
                             out = out + '```' + newresult[0] + '```'
                             out = out + '```' + newresult[1] + '```'
                             break
@@ -127,7 +126,7 @@ async def on_message(message):
                     else:
                         await message.channel.send('そのキーは存在しません')
                 else:
-                    out = PARATRANZ_CK2 + urllib.parse.quote(key) + '\n'
+                    out = PARATRANZ_CK2 + urllib.parse.quote(key) + '&mode=6\n'
                     out = out + '```' + result[0] + '```'
                     out = out + '```' + result[1] + '```'
                     await message.channel.send(out)
@@ -161,7 +160,7 @@ async def on_message(message):
                         count = 0
                         for entry in results:
                             count = count + 1
-                            out = PARATRANZ_CK2 + urllib.parse.quote(entry[1]) + '\n'
+                            out = PARATRANZ_CK2 + urllib.parse.quote(entry[1]) + '&mode=4\n'
                             out = out + '```' + entry[2] + '```'
                             out = out + '```' + entry[3] + '```'
                             await message.channel.send(out)
@@ -218,11 +217,8 @@ if __name__ == "__main__":
     DISCORD_TOKEN   = os.environ.get('DISCORD_TOKEN')
     PARATRANZ_TOKEN = os.environ.get('PARATRANZ_TOKEN')
 
-    thread1 = Thread(target=eu4init)
-    thread2 = Thread(target=ck2init)
-
-    thread1.start()
-    thread2.start()
+    eu4init()
+    ck2init()
 
     # Run Bot
     client.run(DISCORD_TOKEN)
