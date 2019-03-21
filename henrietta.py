@@ -1,10 +1,10 @@
+import os
 import re
 import io
 import json
 import zipfile
 import discord
 import requests
-import argparse
 import urllib.parse
 from threading import Thread
 
@@ -215,14 +215,8 @@ def ck2init():
 
 if __name__ == "__main__":
 
-    # Parse Command Line Options
-    parser = argparse.ArgumentParser()
-    parser.add_argument('discord_token'  , help='Discord Token')
-    parser.add_argument('paratranz_token', help='ParaTranz Token')
-    args = parser.parse_args()
-
-    DISCORD_TOKEN   = args.discord_token
-    PARATRANZ_TOKEN = args.paratranz_token
+    DISCORD_TOKEN   = os.environ.get('DISCORD_TOKEN')
+    PARATRANZ_TOKEN = os.environ.get('PARATRANZ_TOKEN')
 
     thread1 = Thread(target=eu4init)
     thread2 = Thread(target=ck2init)
