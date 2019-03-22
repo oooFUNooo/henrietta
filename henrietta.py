@@ -38,13 +38,12 @@ async def on_message(message):
 
     if client.user != message.author:
 
-        await message.channel.trigger_typing()
-
         for mes in messages:
 
             # Search for EU4 Key
             command = re.match(r'^(!eu4k(ey)?\s+)[^\s]', mes)
             if command:
+                await message.channel.trigger_typing()
                 key = re.sub(command.group(1), '', mes)
                 print('Search for key ' + key)
                 result = eu4dic.get(key)
@@ -74,6 +73,7 @@ async def on_message(message):
             else:
                 command = re.match(r'^(!eu4t(ext)?\s+)[^\s]', mes)
                 if command:
+                    await message.channel.trigger_typing()
                     text = re.sub(command.group(1), '', mes)
                     result = re.match(r'^(([0-9]+)\s+)[^\s]', text)
                     if result:
@@ -109,6 +109,7 @@ async def on_message(message):
             # Search for CK2 Key
             command = re.match(r'^(!ck2k(ey)?\s+)[^\s]', mes)
             if command:
+                await message.channel.trigger_typing()
                 key = re.sub(command.group(1), '', mes)
                 print('Search for key ' + key)
                 result = ck2dic.get(key)
@@ -138,6 +139,7 @@ async def on_message(message):
             else:
                 command = re.match(r'^(!ck2t(ext)?\s+)[^\s]', mes)
                 if command:
+                    await message.channel.trigger_typing()
                     text = re.sub(command.group(1), '', mes)
                     result = re.match(r'^(([0-9]+)\s+)[^\s]', text)
                     if result:
