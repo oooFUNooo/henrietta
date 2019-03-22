@@ -37,6 +37,9 @@ async def on_message(message):
     messages = message.content.split('\n')
 
     if client.user != message.author:
+
+        await message.channel.trigger_typing()
+
         for mes in messages:
 
             # Search for EU4 Key
